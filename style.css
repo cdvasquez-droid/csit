@@ -6,6 +6,9 @@
   --star: #f1eeff;
   --muted: #a9a3d6;
   --glass: rgba(24, 18, 62, 0.55);
+  --v-rgb: 122, 92, 255;
+  --m-rgb: 226, 79, 210;
+  --c-rgb: 92, 225, 255;
   --line: rgba(160, 140, 255, 0.28);
 }
 
@@ -14,9 +17,9 @@ html { scroll-behavior: smooth; }
 
 body {
   background:
-    radial-gradient(ellipse 60% 50% at 20% 15%, rgba(122, 92, 255, 0.28), transparent 70%),
-    radial-gradient(ellipse 50% 45% at 85% 40%, rgba(226, 79, 210, 0.2), transparent 70%),
-    radial-gradient(ellipse 55% 50% at 30% 90%, rgba(92, 225, 255, 0.14), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 15%, rgba(var(--v-rgb), 0.28), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 85% 40%, rgba(var(--m-rgb), 0.2), transparent 70%),
+    radial-gradient(ellipse 55% 50% at 30% 90%, rgba(var(--c-rgb), 0.14), transparent 70%),
     var(--void);
   background-attachment: fixed;
   color: var(--star);
@@ -97,7 +100,7 @@ section {
   aspect-ratio: 1;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 30% 28%, #ffd1f6 0, #e24fd2 25%, #5a37d6 62%, #170f45 100%);
+    radial-gradient(circle at 30% 28%, #ffd1f6 0, var(--magenta) 25%, var(--violet) 62%, #170f45 100%);
   box-shadow: 0 0 80px rgba(122, 92, 255, 0.55), inset -30px -20px 60px rgba(7, 6, 26, 0.7);
   animation: float 9s ease-in-out infinite;
 }
@@ -271,3 +274,54 @@ footer { text-align: center; padding: 3rem 1rem 5rem; color: var(--muted); font-
 ::-webkit-scrollbar-track { background: var(--void); }
 ::-webkit-scrollbar-thumb { background: #3b2f8f; border-radius: 6px; }
 @media (hover: none) { #cursor-glow { display: none; } }
+
+/* ---------- Orbiting skills ---------- */
+.system { position: relative; width: min(600px, 92vw); aspect-ratio: 1; margin: 0 auto; }
+.sun {
+  position: absolute; left: 50%; top: 50%; width: 16%; aspect-ratio: 1; translate: -50% -50%;
+  border-radius: 50%; display: grid; place-items: center;
+  font: 800 clamp(0.7rem, 2vw, 1rem) "Syne", sans-serif; color: #1a0f40;
+  background: radial-gradient(circle at 35% 30%, #fff6d6, #ffc86b 55%, #ff8f5c);
+  box-shadow: 0 0 60px rgba(255, 190, 100, 0.65), 0 0 120px rgba(255, 140, 90, 0.3);
+}
+.ring {
+  position: absolute; left: 50%; top: 50%; border-radius: 50%;
+  border: 1px dashed var(--line); translate: -50% -50%;
+  animation: spin var(--t) linear infinite; animation-delay: var(--d, 0s);
+}
+.r1 { width: 30%; height: 30%; --t: 14s; --d: -2s; }
+.r2 { width: 43%; height: 43%; --t: 20s; --d: -9s; }
+.r3 { width: 56%; height: 56%; --t: 27s; --d: -4s; }
+.r4 { width: 69%; height: 69%; --t: 34s; --d: -20s; }
+.r5 { width: 82%; height: 82%; --t: 42s; --d: -11s; }
+.r6 { width: 96%; height: 96%; --t: 52s; --d: -30s; }
+.sk {
+  position: absolute; left: 50%; top: 0; width: clamp(46px, 11vw, 70px); aspect-ratio: 1;
+  margin: calc(clamp(46px, 11vw, 70px) / -2) 0 0 calc(clamp(46px, 11vw, 70px) / -2);
+  border-radius: 50%; display: grid; place-items: center; pointer-events: auto; cursor: pointer;
+  font: 500 clamp(0.6rem, 1.8vw, 0.8rem) "Outfit", sans-serif; color: var(--star);
+  background: radial-gradient(circle at 30% 25%, rgba(var(--c-rgb), 0.5), rgba(24, 18, 62, 0.92) 72%);
+  border: 1px solid rgba(var(--c-rgb), 0.5);
+  animation: spin var(--t) linear infinite reverse; animation-delay: var(--d, 0s);
+  transition: box-shadow 0.2s, scale 0.2s;
+}
+.r1 .sk, .r2 .sk, .r3 .sk, .r4 .sk, .r5 .sk, .r6 .sk { animation-duration: inherit; }
+.ring .sk { animation-duration: var(--t); animation-delay: var(--d); }
+.sk:hover { scale: 1.25; box-shadow: 0 0 28px rgba(var(--c-rgb), 0.75); z-index: 5; }
+.system:has(.sk:hover) .ring, .system:has(.sk:hover) .sk { animation-play-state: paused; }
+@keyframes spin { to { rotate: 360deg; } }
+.hint.center { text-align: center; }
+
+/* ---------- Theme + warp controls ---------- */
+#controls {
+  position: fixed; left: 1.2rem; bottom: 1.2rem; z-index: 20; display: flex; gap: 0.6rem; align-items: center;
+  pointer-events: auto;
+}
+.swatch { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; }
+.swatch[data-theme="nebula"] { background: linear-gradient(135deg, #7a5cff, #e24fd2); }
+.swatch[data-theme="aurora"] { background: linear-gradient(135deg, #2fe6a6, #3aa0ff); }
+.swatch[data-theme="supernova"] { background: linear-gradient(135deg, #ff6b4a, #ffc247); }
+.swatch.active { border-color: #fff; }
+#warp { padding: 0.45rem 1.1rem; background: rgba(7, 6, 26, 0.7); backdrop-filter: blur(8px); }
+@media (prefers-reduced-motion: reduce) { .ring, .sk { animation: none; } }
+@media (max-width: 760px) { #controls { bottom: 4rem; } }
