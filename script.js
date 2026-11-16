@@ -31,7 +31,14 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-const glow = document.getElementById("cursor-glow");
+// Make sure the helper elements exist, even if index.html is an older copy
+function ensure(id) {
+  let el = document.getElementById(id);
+  if (!el) { el = document.createElement("div"); el.id = id; document.body.appendChild(el); }
+  return el;
+}
+const glow = ensure("cursor-glow");
+const bar = ensure("progress");
 const planet = document.querySelector(".planet");
 window.addEventListener("pointermove", e => {
   mouse.x = e.clientX / W - 0.5;
@@ -43,7 +50,7 @@ window.addEventListener("pointermove", e => {
 
 window.addEventListener("scroll", () => {
   const max = document.documentElement.scrollHeight - H;
-  document.getElementById("progress").style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+  bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
 }, { passive: true });
 
 /* Drag the empty background to fly */
@@ -192,7 +199,8 @@ draggables.forEach(el => {
   };
 });
 
-document.getElementById("reset").addEventListener("click", () => {
+const resetBtn = document.getElementById("reset");
+if (resetBtn) resetBtn.addEventListener("click", () => {
   draggables.forEach(el => el.resetPosition());
   cam.x = cam.y = cam.vx = cam.vy = 0;
 });
@@ -209,4 +217,4 @@ function type() {
   c += deleting ? -1 : 1;
   setTimeout(type, deleting ? 40 : 90);
 }
-if (reduceMotion) typed.textContent = words[0]; else type();
+if (typed) { if (reduceMotion) typed.textContent = words[0]; else type(); }
