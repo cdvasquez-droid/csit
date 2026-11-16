@@ -252,3 +252,22 @@ footer { text-align: center; padding: 3rem 1rem 5rem; color: var(--muted); font-
   html { scroll-behavior: auto; }
   .planet, .cursor { animation: none; }
 }
+
+/* ---------- Upgrades ---------- */
+#cursor-glow {
+  position: fixed; left: -150px; top: -150px; width: 300px; height: 300px;
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(92, 225, 255, 0.16), transparent 65%);
+}
+#progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 30;
+  background: linear-gradient(90deg, var(--cyan), var(--violet), var(--magenta));
+  transform-origin: left; transform: scaleX(0); pointer-events: none;
+}
+.planet { translate: 0 0; transition: translate 0.4s ease-out; }
+.glass:hover, .chip:hover, .orb:hover { border-color: rgba(92, 225, 255, 0.6); }
+::selection { background: var(--violet); color: #fff; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: #3b2f8f; border-radius: 6px; }
+@media (hover: none) { #cursor-glow { display: none; } }
