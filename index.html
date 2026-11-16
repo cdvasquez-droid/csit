@@ -56,14 +56,16 @@
 
     <section id="skills">
       <h2 class="title">Tech arsenal</h2>
-      <div class="skills">
-        <div class="chip" data-drag>HTML5</div>
-        <div class="chip" data-drag>CSS3</div>
-        <div class="chip" data-drag>JavaScript</div>
-        <div class="chip" data-drag>Git &amp; GitHub</div>
-        <div class="chip" data-drag>React</div>
-        <div class="chip" data-drag>Databases</div>
+      <div class="system" aria-label="Skills orbiting a sun">
+        <div class="sun">Corbin</div>
+        <div class="ring r1"><span class="sk" title="HTML5">HTML5</span></div>
+        <div class="ring r2"><span class="sk" title="CSS3">CSS3</span></div>
+        <div class="ring r3"><span class="sk" title="JavaScript">JS</span></div>
+        <div class="ring r4"><span class="sk" title="Git &amp; GitHub">Git</span></div>
+        <div class="ring r5"><span class="sk" title="React">React</span></div>
+        <div class="ring r6"><span class="sk" title="Databases">DB</span></div>
       </div>
+      <p class="hint center">Hover a planet to pause the orbit.</p>
     </section>
 
     <section id="projects">
@@ -102,6 +104,12 @@
 
   <footer>&copy; 2026 Corbin Drew F. Vasquez. Crafted among the stars.</footer>
 
+  <div id="controls">
+    <button type="button" class="swatch" data-theme="nebula" aria-label="Nebula theme"></button>
+    <button type="button" class="swatch" data-theme="aurora" aria-label="Aurora theme"></button>
+    <button type="button" class="swatch" data-theme="supernova" aria-label="Supernova theme"></button>
+    <button type="button" id="warp" class="btn ghost">Warp</button>
+  </div>
   <button id="reset" class="btn ghost" type="button">Reset layout</button>
   <script src="script.js"></script>
 </body>
